@@ -2,7 +2,7 @@ import z from "zod";
 import { zfd } from "zod-form-data";
 export const registerFormSchema = zfd
   .formData({
-    email: z.string().email(),
+    email: z.string(),
     username: z.string().min(3).max(20),
     password: z
       .string()

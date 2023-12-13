@@ -15,7 +15,6 @@
     "test-start": "start-server-and-test 'node dist/server' http-get://localhost:2022 'node dist/client'"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
     "@fastify/cookie": "^9.2.0",
     "@fastify/cors": "^8.4.1",
     "@fastify/formbody": "6.0.0",
@@ -37,7 +36,9 @@
     "zod": "^3.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@repo/typescript-config": "workspace:*",
+    "@repo/ui": "workspace:*",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^18.16.16",

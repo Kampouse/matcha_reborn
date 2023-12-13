@@ -1,8 +1,7 @@
 import { Headless } from "../components/Headless";
 import {  registerFormSchema } from "../utils/schemas";
-import { trpc, Fetch } from "../utils/trpc";
+import {Fetch } from "../utils/trpc";
 import { faker } from '@faker-js/faker';
-import type z from "zod";
 export default function Register() {
   const Validation = (formData: FormData) => {
     const result = registerFormSchema.safeParse(formData);

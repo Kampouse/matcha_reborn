@@ -8,20 +8,14 @@ import cors from "@fastify/cors";
 import cookie from "@fastify/cookie";
 import { Clientdb as db } from "./database";
 import type { FastifyCookieOptions } from "@fastify/cookie";
-import { ValidateUser, isExistinUser, createUser } from "../utils/session";
+import { ValidateUser, isExistinUser, createUser, deleteAccount } from "../utils/session";
 // change this
 export interface ServerOptions {
   dev?: boolean;
   port?: number;
   prefix?: string;
 }
-let user = "";
-export const setUser = (user: string) => {
-  return user;
-};
-const getUser = () => {
-  return user;
-};
+
 export function createServer(opts: ServerOptions) {
   const dev = opts.dev ?? true;
   const port = opts.port ?? 3000;
@@ -108,7 +102,7 @@ export function createServer(opts: ServerOptions) {
     return { hello: req.cookies?.username };
   });
 
-  server.get("/register", async (req, res) => {
+  server.post("/register", async (req, res) => {
     const validated_input = z
       .object({
         email: z.string(),
@@ -120,17 +114,39 @@ export function createServer(opts: ServerOptions) {
     const userExist = await isExistinUser(validated_input.email);
     if (userExist) {
       res.status(401);
+      //TODO: make this a custom error 
       throw new Error("user already exists");
     } else {
       res.status(200);
       const data = await createUser(validated_input);
-      res.send({
-        email: validated_input.email,
-        username: validated_input.username,
-      });
+
+      const obj_sent = {
+        creds: {
+          email: validated_input.email,
+          username: validated_input.username,
+        }
+      }
+      res.send(obj_sent);
     }
   });
 
+  server.delete("/delete_user", async (req, res) => {
+    const validated_input = z
+      .object({
+        email: z.string(),
+      })
+      .parse(req.body);
+    const userExist = await isExistinUser(validated_input.email);
+    if (userExist) {
+      const data = await deleteAccount(validated_input.email);
+      res.status(200);
+      //TODO: make this a custom error 
+    } else {
+      res.status(401);
+      throw new Error("user does not exists");
+    }
+  });
+  // delete user account
   const stop = async () => {
     await server.close();
   };

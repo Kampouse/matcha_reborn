@@ -1,4 +1,4 @@
-import { Headless } from "../components/Headless";
+import { Headless } from "../components/Layout";
 import { loginFormSchema } from "../utils/schemas";
 import { trpc, Fetch } from "../utils/trpc";
 import type z from "zod";

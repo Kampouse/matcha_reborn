@@ -40,16 +40,12 @@ export const ValidateUser = async (input: string, mail: string) => {
 };
 
 export const deleteAccount = async (inputEmail: string) => {
-  const content = await Clientdb.execute(
-    "DELETE FROM users WHERE email = ? ",
-    [inputEmail],
-  );
+  const content = await Clientdb.execute("DELETE FROM users WHERE email = ? ", [
+    inputEmail,
+  ]);
   console.log("content", content.rows);
   return content.rows;
-}
-
-
-
+};
 
 export const isExistinUser = async (inputEmail: string) => {
   const datUser = await Clientdb.execute(

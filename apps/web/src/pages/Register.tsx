@@ -1,25 +1,23 @@
-import { Headless } from "../components/Headless";
-import {  registerFormSchema } from "../utils/schemas";
-import {Fetch } from "../utils/trpc";
-import { faker } from '@faker-js/faker';
+import { Headless } from "../components/Layout";
+import { registerFormSchema } from "../utils/schemas";
+import { Fetch } from "../utils/trpc";
+import { faker } from "@faker-js/faker";
 export default function Register() {
   const Validation = (formData: FormData) => {
     const result = registerFormSchema.safeParse(formData);
-    if( result.success) 
-    {
-       return result.data
+    if (result.success) {
+      return result.data;
     }
-    console.log(result)
-    return  null
-
+    console.log(result);
+    return null;
   };
   //onClientSubmit(validatedContent) ? onServerSubmit(validatedContent) : console.log("fall back to error state here") }
   const handleSubmit = (e: Event) => {
     const form = e.target as HTMLFormElement;
     e.preventDefault();
-     
+
     const formData = new FormData(form);
-     console.log(formData);
+    console.log(formData);
     const validatedContent = Validation(formData);
     if (validatedContent === null || validatedContent === undefined) {
       console.log("error state");
@@ -41,16 +39,14 @@ export default function Register() {
 
   const mockFn = (name: string) => {
     const field = {
-      
-      email:  faker.internet.email(),
-      username : faker.internet.userName(),
+      email: faker.internet.email(),
+      username: faker.internet.userName(),
       password: faker.internet.password(),
     } as { [key: string]: string };
     return field[name];
   };
- const   pass = mockFn("password") + "!123"
+  const pass = mockFn("password") + "!123";
 
-   
   return (
     <Headless>
       <div
@@ -87,17 +83,15 @@ export default function Register() {
                 class="bg-transparent border border-1 border-gray-900 text-slate-50 text-center"
               />
               <input
-                 name="re_password"
+                name="re_password"
                 type="password"
                 placeholder="retype password"
                 value={pass}
                 class="bg-transparent border border-1 border-gray-900 text-slate-50 text-center"
-              >
-              </input>
+              ></input>
               <button class="mt-6" type="submit">
                 {" "}
-                submit
-                {" "}
+                submit{" "}
               </button>
             </div>
           </div>

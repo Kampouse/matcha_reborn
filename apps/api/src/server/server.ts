@@ -8,7 +8,12 @@ import cors from "@fastify/cors";
 import cookie from "@fastify/cookie";
 import { Clientdb as db } from "./database";
 import type { FastifyCookieOptions } from "@fastify/cookie";
-import { ValidateUser, isExistinUser, createUser, deleteAccount } from "../utils/session";
+import {
+  ValidateUser,
+  isExistinUser,
+  createUser,
+  deleteAccount,
+} from "../utils/session";
 // change this
 export interface ServerOptions {
   dev?: boolean;
@@ -114,7 +119,7 @@ export function createServer(opts: ServerOptions) {
     const userExist = await isExistinUser(validated_input.email);
     if (userExist) {
       res.status(401);
-      //TODO: make this a custom error 
+      //TODO: make this a custom error
       throw new Error("user already exists");
     } else {
       res.status(200);
@@ -124,8 +129,8 @@ export function createServer(opts: ServerOptions) {
         creds: {
           email: validated_input.email,
           username: validated_input.username,
-        }
-      }
+        },
+      };
       res.send(obj_sent);
     }
   });
@@ -140,7 +145,7 @@ export function createServer(opts: ServerOptions) {
     if (userExist) {
       const data = await deleteAccount(validated_input.email);
       res.status(200);
-      //TODO: make this a custom error 
+      //TODO: make this a custom error
     } else {
       res.status(401);
       throw new Error("user does not exists");

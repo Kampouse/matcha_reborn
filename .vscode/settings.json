@@ -11,6 +11,13 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "[!a]*/**": true,
+    "a[!p]*/**": true,
+    "ap[!p]*/**": true,
+    "app[!s]*/**": true,
+    "apps/[!w]*/**": true,
+    "apps/w[!e]*/**": true,
+    "apps/we[!b]*/**": true
   }
 }

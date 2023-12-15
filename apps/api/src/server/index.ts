@@ -1,6 +1,6 @@
 import { serverConfig } from "../config";
-import { createServer } from "./server";
+import createServer from "./server";
 
 const server = createServer(serverConfig);
 
-void server.start();
+export const viteNodeApp = createServer(serverConfig).server;

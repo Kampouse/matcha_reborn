@@ -26,12 +26,8 @@ export default function Login() {
       body: JSON.stringify({
         email: validatedContent.email,
         password: validatedContent.password,
-      }),
-      headers: {
-        credentials: "include",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000",
-      },
+      })
+
     });
   };
 

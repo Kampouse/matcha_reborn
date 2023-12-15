@@ -21,11 +21,12 @@ export interface ServerOptions {
   prefix?: string;
 }
 
-export function createServer(opts: ServerOptions) {
+export default function createServer(opts: ServerOptions) {
   const dev = opts.dev ?? true;
   const port = opts.port ?? 3000;
   const prefix = opts.prefix ?? "/trpc";
   const server = fastify({ logger: dev });
+
 
   void server.register(cookie, {
     secret: "my-secret", // for cookies signature
@@ -45,11 +46,12 @@ export function createServer(opts: ServerOptions) {
         Headers: {
           credentials: "include", // Include credentials in requests
           "Access-Control-Allow-Credentials": "true",
-          "Access-Control-Allow-Origin": "http://localhost:3000",
+          "Access-Control-Allow-Origin": "http://localhost:3000/*",
         },
       },
     })
-    .register(cors, { origin: "http://localhost:3000", credentials: true });
+    .register(cors, { origin: "*", credentials: true });
+
 
   // make this work some day
   server.register(async function (instance, opts, done) {
@@ -59,6 +61,10 @@ export function createServer(opts: ServerOptions) {
       done();
     });
   });
+
+
+
+
 
   server.get("/", (req, reply) => {
     // `reply.unsignCookie()` is also available
@@ -93,12 +99,11 @@ export function createServer(opts: ServerOptions) {
       // path: "localhost:3000",
       //})
       //
-      res.send({ creds: data });
+      return res.send({ creds: data });
     } else {
       res.status(401);
       throw new Error("invalid credentials");
     }
-    return { hello: req.cookies?.username, data: data };
   });
 
   server.get("/logout", async (req, res) => {

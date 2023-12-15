@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "esbuild src/server/index.ts src/client/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
-    "dev:server": "vitest --watch ./src/test/*",
+    "dev:test": "vitest --watch ./src/test/*",
+     "dev:server": "vite",
+     
     "dev": "run-p dev:* ",
     "lint": "eslint --cache --ext \".js,.ts,.tsx\" --report-unused-disable-directives src",
     "type-check": "tsc",

@@ -32,14 +32,14 @@ export default function Register() {
       headers: {
         credentials: "include",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000",
+        "Access-Control-Allow-Origin": "http://localhost:2424",
       },
     });
   };
 
   const mockFn = (name: string) => {
     const field = {
-      email: faker.internet.email(),
+      email: faker.internet.email({ lastName: "Martel" }),
       username: faker.internet.userName(),
       password: faker.internet.password(),
     } as { [key: string]: string };

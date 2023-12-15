@@ -2,14 +2,17 @@ import { defineConfig } from 'vite';
 import { VitePluginNode } from 'vite-plugin-node'
 
 export default defineConfig({
+  server: {
+    port: 3000,
+  },
   plugins: [
     // If you're using Fastify with a Node.js backend setup, this plugin can be useful
     ...VitePluginNode({
       // Node.js app entry point
-      appPath: './src/server.ts',
+      appPath: './src/server/index.ts',
       adapter: 'fastify',
-      
-      tsCompiler: "esbuild"
+      tsCompiler: "esbuild",
+      exportName: 'viteNodeApp'
       // Other plugin options
     }),
   ],

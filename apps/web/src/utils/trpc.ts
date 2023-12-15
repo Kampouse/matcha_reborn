@@ -20,10 +20,15 @@ export const trpc = createTRPCProxyClient<IAppRouter>({
 
 export const Fetch = async (param: string, init?: RequestInit) => {
   try {
-    const response = await fetch(`http://localhost:2022${param}`, {
+    const response = await fetch(`http://localhost:3000${param}`, {
       headers: {
         "Content-Type": "application/json",
         credentials: "include",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Credentials": "true"
+
+
       },
       ...init,
     });

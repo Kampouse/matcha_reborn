@@ -1,5 +1,6 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  extends: ["@repo/eslint-config/index.js"],
+  "extends": ["eslint:recommended", "plugin:solid/recommended", "@repo/eslint-config/index.js"],
+	"plugins": ["solid"], 
 };

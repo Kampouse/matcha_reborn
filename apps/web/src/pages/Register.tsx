@@ -3,13 +3,7 @@ import { registerFormSchema } from "../utils/schemas";
 import { Fetch } from "../utils/trpc";
 import {
   Show,
-  createEffect,
-  createReaction,
-  createRenderEffect,
-  createResource,
   createSignal,
-  onCleanup,
-  untrack,
 } from "solid-js";
 import z from "zod";
 import { faker } from "@faker-js/faker";

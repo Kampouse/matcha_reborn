@@ -27,7 +27,6 @@ export default function createServer(opts: ServerOptions) {
   const prefix = opts.prefix ?? "/trpc";
   const server = fastify({ logger: dev });
 
-
   void server.register(cookie, {
     secret: "my-secret", // for cookies signature
     hook: "onRequest", // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
@@ -52,7 +51,6 @@ export default function createServer(opts: ServerOptions) {
     })
     .register(cors, { origin: "*", credentials: true });
 
-
   // make this work some day
   server.register(async function (instance, opts, done) {
     //add a crsf token to the cookie
@@ -61,10 +59,6 @@ export default function createServer(opts: ServerOptions) {
       done();
     });
   });
-
-
-
-
 
   server.get("/", (req, reply) => {
     // `reply.unsignCookie()` is also available

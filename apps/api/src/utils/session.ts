@@ -3,6 +3,7 @@ import { Clientdb } from "../server/database";
 import { z } from "zod";
 const UsePasswordFromHash = async (input: string) => {
   const ray = Uint8Array.from([42, 0, 3, 4, 5, 3, 7, 42]);
+  // argoion2id standart ... pbkdf2
   const key = await pbkdf2.pbkdf2(input, ray, 1000, 32, "SHA-256");
   const hex = Array.prototype.map
     .call(key, (x) => ("00" + x.toString(16)).slice(-2))

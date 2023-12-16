@@ -1,8 +1,20 @@
 import { Headless } from "../components/Layout";
 import { registerFormSchema } from "../utils/schemas";
 import { Fetch } from "../utils/trpc";
+import {
+  Show,
+  createEffect,
+  createReaction,
+  createRenderEffect,
+  createResource,
+  createSignal,
+  onCleanup,
+  untrack,
+} from "solid-js";
+import z from "zod";
 import { faker } from "@faker-js/faker";
 export default function Register() {
+  const [issue, setissue] = createSignal();
   const Validation = (formData: FormData) => {
     const result = registerFormSchema.safeParse(formData);
     if (result.success) {
@@ -12,7 +24,34 @@ export default function Register() {
     return null;
   };
   //onClientSubmit(validatedContent) ? onServerSubmit(validatedContent) : console.log("fall back to error state here") }
-  const handleSubmit = (e: Event) => {
+
+  type registerFormSchema = ReturnType<typeof Validation>;
+  const registerFN = async (validatedContent: registerFormSchema) => {
+    const data = await Fetch("/register", {
+      method: "POST",
+      body: JSON.stringify({
+        email: validatedContent.email,
+        username: validatedContent.username,
+        password: validatedContent.password,
+        re_password: validatedContent.re_password,
+      }),
+      headers: {
+        credentials: "include",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:2424",
+      },
+    });
+    const ouput = z
+      .object({
+        creds: z.object({
+          email: z.string().describe("email"),
+          username: z.string().describe("username"),
+        }),
+      })
+      .safeParse(data);
+    return ouput.success ? ouput.data : null;
+  };
+  const handleSubmit = async (e: Event) => {
     const form = e.target as HTMLFormElement;
     e.preventDefault();
 
@@ -23,20 +62,14 @@ export default function Register() {
       console.log("error state");
       return null;
     }
-    Fetch("/register", {
-      method: "POST",
-      body: JSON.stringify({
-        email: validatedContent.email,
-        password: validatedContent.password,
-      }),
-      headers: {
-        credentials: "include",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:2424",
-      },
-    });
-  };
 
+    const data = await registerFN(validatedContent);
+    if (data === null) {
+      setissue(false);
+      return null;
+    }
+    setissue(true);
+  };
   const mockFn = (name: string) => {
     const field = {
       email: faker.internet.email({ lastName: "Martel" }),
@@ -45,7 +78,7 @@ export default function Register() {
     } as { [key: string]: string };
     return field[name];
   };
-  const pass = mockFn("password") + "!123";
+  const pass = "hello!itsMeMAYa" + "!123";
 
   return (
     <Headless>
@@ -53,7 +86,13 @@ export default function Register() {
         class=" flex flex-col items-center justify-center 
        border border-1 border-gray-900 rounded-lg  my-[100px] p-[2em]"
       >
-        <h1> Register to this shit fest </h1>
+        <Show when={issue() === false}>
+          <h1> your request as been denied</h1>
+        </Show>
+        <Show when={issue() === true}>
+          <h1> your request as succesfull</h1>
+        </Show>
+        <h1> Register to platform hugging</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div
             class={

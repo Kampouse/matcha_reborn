@@ -24,15 +24,11 @@ export const routes: RouteDefinition[] = [
 
   {
     path: "/register",
+
     component: lazy(() => import("./pages/register")),
   },
   {
     path: "**",
     component: lazy(() => import("./errors/404")),
-  }
-
-
-
-
-
+  },
 ];

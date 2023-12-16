@@ -2,10 +2,10 @@ import { For } from "solid-js";
 import { Link } from "@solidjs/router";
 export const Nav = () => {
   const pages = [
-    { name: "swipe", href: "/Swipe", current: true },
-    { name: "me", href: "/Me", current: false },
-    { name: "login", href: "/Login", current: false },
-    { name: "register", href: "/Register", current: false },
+    { name: "swipe", href: "/swipe", current: true },
+    { name: "me", href: "/me", current: false },
+    { name: "register", href: "/register", current: false },
+    { name: "login", href: "/login", current: false },
     { name: "error", href: "/error", current: false },
   ];
 

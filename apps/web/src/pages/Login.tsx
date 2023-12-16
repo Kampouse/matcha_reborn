@@ -26,8 +26,7 @@ export default function Login() {
       body: JSON.stringify({
         email: validatedContent.email,
         password: validatedContent.password,
-      })
-
+      }),
     });
   };
 

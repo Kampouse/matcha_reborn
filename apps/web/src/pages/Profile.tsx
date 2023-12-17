@@ -1,4 +1,4 @@
-export default function mepage(props) {
+export default function Profile() {
   return (
     <>
       <main>

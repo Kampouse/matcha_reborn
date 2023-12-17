@@ -7,6 +7,7 @@ import { Router } from "@solidjs/router";
 import { QueryClientProvider, QueryClient } from "@tanstack/solid-query";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { IAppRouter } from "../../backend/src/server/router/_app";
+
 import { onMount } from "solid-js";
 import App from "./app";
 const queried = new QueryClient({

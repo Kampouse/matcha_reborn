@@ -1,4 +1,4 @@
-import { router } from "../utils";
+import { router } from "./utils";
 
 import {
 } from "@trpc/server/adapters/fastify";
@@ -6,7 +6,6 @@ import {
 import example from "./example";
 import database from "./database";
 import session from "./session";
-import { Clientdb as db } from "../database";
 export const appRouter = router({
   example,
   database,

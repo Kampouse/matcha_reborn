@@ -3,7 +3,6 @@ import { Link, useRoutes, useLocation } from "@solidjs/router";
 import { Nav } from "./components/Nav";
 import { routes } from "./routes";
 import Error from "./components/Error";
-import Home from "./pages";
 const showNav = (value) => {
   const RouteNoNav = ["/login", "/register", "/error", "/"];
   return RouteNoNav.includes(value.pathname) ? false : true;

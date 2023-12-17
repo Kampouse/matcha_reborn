@@ -5,11 +5,46 @@ import { render } from "solid-js/web";
 import superjson from "superjson";
 import { Router } from "@solidjs/router";
 import { QueryClientProvider, QueryClient } from "@tanstack/solid-query";
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
-import { IAppRouter } from "../../backend/src/server/router/_app";
+import type { IAppRouter } from "@repo/trpc";
+import { serverConfig } from "@repo/trpc";
 
-import { onMount } from "solid-js";
+
+import {
+  createTRPCProxyClient,
+  createWSClient,
+  httpBatchLink,
+  splitLink,
+  wsLink,
+  
+} from "@trpc/client";
+
+
+
+
+
+
 import App from "./app";
+
+
+const { port, prefix } = serverConfig;
+  const urlEnd = `localhost:${port}${prefix}`;
+  const wsClient = createWSClient({ url: `ws://${urlEnd}` });
+  const trpc = createTRPCProxyClient<IAppRouter>({
+    links: [
+      splitLink({
+        condition(op) {
+          return op.type === "subscription";
+        },
+        true: wsLink({ client: wsClient }),
+        false: httpBatchLink({ url: `http://${urlEnd}` }),
+      }),
+    ],
+    transformer: superjson,
+    // add credentials to all requests
+  });
+
+
+
 const queried = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
 });
@@ -24,7 +59,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(
   () => (
     <QueryClientProvider client={queried}>
-      <Router>
+      <Router> 
         <App />
       </Router>
     </QueryClientProvider>

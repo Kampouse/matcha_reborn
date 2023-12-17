@@ -2,11 +2,10 @@ import { lazy } from "solid-js";
 import type { RouteDefinition } from "@solidjs/router";
 
 import AboutData from "./pages/about.data";
-import { Headless } from "./components/Layout";
 export const routes: RouteDefinition[] = [
   {
     path: "/",
-    component: lazy(() => import("./pages/index")),
+    component: lazy(() => import("./pages/home")),
   },
   {
     path: "/about",
@@ -15,7 +14,7 @@ export const routes: RouteDefinition[] = [
   },
   {
     path: "/login",
-    component: lazy(() => import("./pages/login")),
+    component: lazy(() => import("./pages/Login")),
   },
   {
     path: "/me",
@@ -25,7 +24,7 @@ export const routes: RouteDefinition[] = [
   {
     path: "/register",
 
-    component: lazy(() => import("./pages/register")),
+    component: lazy(() => import("./pages/Register")),
   },
   {
     path: "**",

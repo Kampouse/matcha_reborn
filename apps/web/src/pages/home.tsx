@@ -1,6 +1,6 @@
-import { Component, createSignal, onMount } from "solid-js";
+import {  createSignal,  } from "solid-js";
 import { Link } from "@solidjs/router";
-export default function Home(): Component {
+export default function Home() {
   document.title = "Home";  
   const [count, setCount] = createSignal(0);
   return (

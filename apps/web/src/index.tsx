@@ -29,7 +29,7 @@ import App from "./app";
 const { port, prefix } = serverConfig;
   const urlEnd = `localhost:${port}${prefix}`;
   const wsClient = createWSClient({ url: `ws://${urlEnd}` });
-  const trpc = createTRPCProxyClient<IAppRouter>({
+  export  const trpc = createTRPCProxyClient<IAppRouter>({
     links: [
       splitLink({
         condition(op) {
@@ -42,8 +42,6 @@ const { port, prefix } = serverConfig;
     transformer: superjson,
     // add credentials to all requests
   });
-
-
 
 const queried = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },

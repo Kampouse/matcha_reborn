@@ -41,6 +41,9 @@ importers:
       '@planetscale/database':
         specifier: ^1.11.0
         version: 1.11.0
+      '@repo/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@trpc/client':
         specifier: ^10.43.6
         version: 10.44.1(@trpc/server@10.44.1)

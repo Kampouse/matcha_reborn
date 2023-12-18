@@ -2,11 +2,9 @@ import ws from "@fastify/websocket";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import fastify from "fastify";
 import { z } from "zod";
-import { appRouter } from "./router/_app";
-import { createContext } from "./context";
+import { createContext, appRouter } from "@repo/trpc";
 import cors from "@fastify/cors";
 import cookie from "@fastify/cookie";
-import { Clientdb as db } from "./database";
 import type { FastifyCookieOptions } from "@fastify/cookie";
 import {
   ValidateUser,

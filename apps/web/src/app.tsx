@@ -1,5 +1,5 @@
 import { Component, Show, ErrorBoundary } from "solid-js";
-import { Link, useRoutes, useLocation } from "@solidjs/router";
+import {  useRoutes, useLocation } from "@solidjs/router";
 import { Nav } from "./components/Nav";
 import { routes } from "./routes";
 import Error from "./components/Error";

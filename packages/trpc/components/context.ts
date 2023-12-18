@@ -1,6 +1,5 @@
 import type { inferAsyncReturnType } from "@trpc/server";
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
-import { set } from "zod";
 
 export const createContextInner = async (opts: CreateFastifyContextOptions) => {
   const { req, res } = opts;

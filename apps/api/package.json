@@ -16,6 +16,7 @@
     "test-start": "start-server-and-test 'node dist/server' http-get://localhost:2022 'node dist/client'"
   },
   "dependencies": {
+    "@repo/trpc": "workspace:*",
     "@fastify/cookie": "^9.2.0",
     "@fastify/cors": "^8.4.1",
     "@fastify/formbody": "6.0.0",

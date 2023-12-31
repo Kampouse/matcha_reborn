@@ -7,10 +7,10 @@ beforeAll(() => {
     createServer(server).listen(process.env.PORT || 3000);
 });
 //dummie test
-describe("session", () => {
+describe("valid login", () => {
     test("should be able to set a cookie", async () => {
         const input = { email: "hello", password: "world" };
-        const data = await fetch("http://localhost:3000/session/login", { method: "POST", body: JSON.stringify({ email: "hello", password: "world" }) })
+        const data = await fetch("http://localhost:3000/session/login", { method: "POST", body: JSON.stringify(input) })
 
         const body = await data.json();
 
@@ -21,6 +21,10 @@ describe("session", () => {
     })
 
 })
+
+
+
+
 afterAll(() => {
 
 

@@ -6,7 +6,7 @@ import SessionsRouter from "./routers/sessions";
 import { defineNodeMiddleware } from "h3";
 import z from "zod";
 import { connect, Client } from "@planetscale/database";
-import type { Connection, DatabaseError } from "@planetscale/database";
+import type { Connection, DatabaseError, ExecutedQuery } from "@planetscale/database";
 import pino from 'pino-http'
 import "dotenv/config";
 const database = () => {
@@ -26,14 +26,16 @@ class wrappedClient {
 	}
 	//third param  is a optional validator for the query 
 
-	async query(query: string, params) {
+	async query(query: string, params): Promise<{ success: boolean, data: ExecutedQuery }> {
+
+		const data = await this.client.execute(query, params);
 		try {
 			return {
 				success: true,
-				data: await this.client.execute(query, params) as unknown
+				data: await this.client.execute(query, params) as ExecutedQuery
 			}
 		}
-		catch (error: unknown) {
+		catch (error) {
 			return { success: false, data: error };
 		}
 	}

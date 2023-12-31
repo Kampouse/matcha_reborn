@@ -9,14 +9,16 @@ beforeAll(() => {
 //dummie test
 describe("session", () => {
     test("should be able to set a cookie", async () => {
-        const data = await fetch("http://localhost:3000/session/login", { method: "GET" })
+        const input = { email: "hello", password: "world" };
+        const data = await fetch("http://localhost:3000/session/login", { method: "POST", body: JSON.stringify({ email: "hello", password: "world" }) })
+
         const body = await data.json();
-        expect(body).toEqual({ hello: "session" });
 
-
-        //expect(body).toEqual({ hello: "session" });
+        expect(body).toEqual({
+            payload: { success: true, data: { email: "hello", password: "world" } }
+            //expect(body).toEqual({ hello: "session" });
+        })
     })
-
 
 })
 afterAll(() => {

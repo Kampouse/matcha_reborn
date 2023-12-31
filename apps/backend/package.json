@@ -4,15 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx listhen -w src/app.ts"
+    "test": "vitest --watch",
+    "dev": "npx listhen -w src/app.ts | npx pino-pretty -c",
+    "build": "esbuild src/**  --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
+    "lint": "eslint --cache --ext \".js,.ts,.tsx\" --report-unused-disable-directives src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@planetscale/database": "^1.11.0",
     "h3": "^1.9.0",
-    "listhen": "^1.5.5"
+    "listhen": "^1.5.5",
+    "pino-http": "^9.0.0",
+    "zod": "^3.22.4",
+    "zod_utilz": "^0.7.3"
   },
   "devDependencies": {
     "vitest": "^1.1.0"

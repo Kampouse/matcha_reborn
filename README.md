@@ -1,14 +1,31 @@
-# `Turborepo` Vite starter
+# 42school: matcha - a  "dating" web app
 
-This is an official starter Turborepo.
+## Description
 
-## Using this example
+web app that allows you to match with people based on your interests and location bundled with [turborepo]( https://turbo.build/)
 
-Run the following command:
+## Stack used  
 
-```sh
-npx create-turbo@latest -e with-vite
-```
+    - [vite](https://vitejs.dev)  & [solidjs](https://solidjs.org) for the frontend  
+    - [listhen](https://unjs.io/packages/listhen) &
+     [h3](https://unjs.io/packages/h3) for the backend
+
+## REQUIREMENTS
+
+    - nodejs 18 or higher
+    - npm or pnpm 
+    - a .env   
+    with the following variables:
+    - DATABASE_HOST // the host of your database
+    - DATABASE_USERNAME // the user of your database
+    - DATABASE_PASSWORD // the password of your database
+
+    my current setup is a  planetescale instance 
+
+## INSTALLATION
+
+    - npm install
+    - npm run dev
 
 ## What's inside?
 
@@ -16,19 +33,14 @@ This Turborepo includes the following packages and apps:
 
 ### Apps and Packages
 
-- `docs`: a vanilla [vite](https://vitejs.dev) ts app
-- `web`: another vanilla [vite](https://vitejs.dev) ts app
-- `ui`: a stub component & utility library shared by both `web` and `docs` applications
-- `eslint-config-custom`: shared `eslint` configurations
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `web at /app/web`: the frontend part of th app build on top of  [vite](https://vitejs.dev) with [solidjs](https://solidjs.org)
+- `backend /app/backend`: the backend part of the app build on top of [h3](https://unjs.io/packages/h3) ran by on top of [listhen](https://unjs.io/packages/listhen)
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
-This Turborepo has some additional tools already setup for you:
-
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
-- [Jest](https://jestjs.io) test runner for all things JavaScript
+- [vitest](https://vitest.dev) for testing
 - [Prettier](https://prettier.io) for code formatting

@@ -1,7 +1,6 @@
 import { router } from "./utils";
 
-import {
-} from "@trpc/server/adapters/fastify";
+import {} from "@trpc/server/adapters/fastify";
 //trpc.register. register. useQuery(() => content)
 import example from "./example";
 export const appRouter = router({

@@ -1,10 +1,7 @@
 import { Headless } from "../components/Layout";
 import { registerFormSchema } from "../utils/schemas";
 import { Fetch } from "../utils/trpc";
-import {
-  Show,
-  createSignal,
-} from "solid-js";
+import { Show, createSignal } from "solid-js";
 import z from "zod";
 import { faker } from "@faker-js/faker";
 export default function Register() {

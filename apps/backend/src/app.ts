@@ -1,13 +1,14 @@
-import { createApp, useBase, createRouter, eventHandler, getRouterParam, getRouterParams, Router, use, getQuery, setCookie, fromNodeMiddleware } from "h3";
+import {
+	createApp,
+	useBase,
+} from "h3";
 
-import { listen, listenAndWatch } from "listhen";
-import { AppUse } from "h3";
 import SessionsRouter from "./routers/sessions";
-import { defineNodeMiddleware } from "h3";
-import z from "zod";
-import { connect, Client } from "@planetscale/database";
-import type { Connection, DatabaseError, ExecutedQuery } from "@planetscale/database";
-import pino from 'pino-http'
+import { Client } from "@planetscale/database";
+import type {
+	Connection,
+	ExecutedQuery,
+} from "@planetscale/database";
 import "dotenv/config";
 const database = () => {
 	const config = {
@@ -17,31 +18,36 @@ const database = () => {
 	};
 	const Clientdb = new Client(config);
 	return Clientdb;
-
-}
+};
 class wrappedClient {
 	client: Connection;
 	constructor(client: Connection) {
 		this.client = client;
 	}
-	//third param  is a optional validator for the query 
+	//third param  is a optional validator for the query
 
-	async query(query: string, params): Promise<{ success: boolean, data: ExecutedQuery }> {
-
-		const data = await this.client.execute(query, params);
+	async query(
+		query: string,
+		params,
+	): Promise<{ success: boolean; data: ExecutedQuery }> {
 		try {
 			return {
 				success: true,
-				data: await this.client.execute(query, params) as ExecutedQuery
-			}
-		}
-		catch (error) {
+				data: (await this.client.execute(query, params)) as ExecutedQuery,
+			};
+		} catch (error) {
 			return { success: false, data: error };
 		}
 	}
-	async execute(query: string, params) { return await this.execute(query, params); }
-	async transaction(query, params) { return await this.transaction(query, params); }
-	async refresh() { return await this.client.refresh(); }
+	async execute(query: string, params) {
+		return await this.execute(query, params);
+	}
+	async transaction(query, params) {
+		return await this.transaction(query, params);
+	}
+	async refresh() {
+		return await this.client.refresh();
+	}
 }
 export const Clientdb = new wrappedClient(database().connection());
 export const app = () => {
@@ -51,23 +57,9 @@ export const app = () => {
 	//App.options.onRequest = (event) => { console.log("on request"); };
 	App.use("/", useBase("/session", SessionsRouter));
 	return App;
-}
-const handler = (req, res) => {
-	const App = app();
-
-}
-export const vitestListen = () => {
-	const App = app();
-
-}
+};
 export default app;
 
-
-
-
-
 //get the  path that are  being used
-
-
 
 // listener: { url, getURL, server, close, ... }

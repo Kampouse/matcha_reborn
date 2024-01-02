@@ -8,40 +8,32 @@ import { QueryClientProvider, QueryClient } from "@tanstack/solid-query";
 import type { IAppRouter } from "@repo/trpc";
 import { serverConfig } from "@repo/trpc";
 
-
 import {
   createTRPCProxyClient,
   createWSClient,
   httpBatchLink,
   splitLink,
   wsLink,
-  
 } from "@trpc/client";
-
-
-
-
-
 
 import App from "./app";
 
-
 const { port, prefix } = serverConfig;
-  const urlEnd = `localhost:${port}${prefix}`;
-  const wsClient = createWSClient({ url: `ws://${urlEnd}` });
-  export  const trpc = createTRPCProxyClient<IAppRouter>({
-    links: [
-      splitLink({
-        condition(op) {
-          return op.type === "subscription";
-        },
-        true: wsLink({ client: wsClient }),
-        false: httpBatchLink({ url: `http://${urlEnd}` }),
-      }),
-    ],
-    transformer: superjson,
-    // add credentials to all requests
-  });
+const urlEnd = `localhost:${port}${prefix}`;
+const wsClient = createWSClient({ url: `ws://${urlEnd}` });
+export const trpc = createTRPCProxyClient<IAppRouter>({
+  links: [
+    splitLink({
+      condition(op) {
+        return op.type === "subscription";
+      },
+      true: wsLink({ client: wsClient }),
+      false: httpBatchLink({ url: `http://${urlEnd}` }),
+    }),
+  ],
+  transformer: superjson,
+  // add credentials to all requests
+});
 
 const queried = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -57,7 +49,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(
   () => (
     <QueryClientProvider client={queried}>
-      <Router> 
+      <Router>
         <App />
       </Router>
     </QueryClientProvider>

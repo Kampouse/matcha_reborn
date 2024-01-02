@@ -98,7 +98,7 @@ export default function createServer(opts: ServerOptions) {
     }
   });
 
-  server.get("/logout", async (req, res) => {
+  server.get("/logout", async (req) => {
     console.log("logout", req.cookies);
 
     return { hello: req.cookies?.username };
@@ -121,6 +121,10 @@ export default function createServer(opts: ServerOptions) {
     } else {
       res.status(200);
       const data = await createUser(validated_input);
+      if (!data) {
+        res.status(401);
+        throw new Error("user already exists");
+      }
 
       const obj_sent = {
         creds: {
@@ -141,6 +145,10 @@ export default function createServer(opts: ServerOptions) {
     const userExist = await isExistinUser(validated_input.email);
     if (userExist) {
       const data = await deleteAccount(validated_input.email);
+      if (!data) {
+        res.status(401);
+        throw new Error("user does not exists");
+      }
       res.status(200);
       //TODO: make this a custom error
     } else {

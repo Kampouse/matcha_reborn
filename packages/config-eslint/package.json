@@ -10,5 +10,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-plugin-solid": "^0.13.0"
   }
 }

@@ -5,11 +5,9 @@ import {
   splitLink,
   wsLink,
 } from "@trpc/client";
-import superjson from "superjson";
 import { serverConfig } from "../config";
 import type { IAppRouter } from "../server/router/_app";
 import "./polyfill";
-import { vitest } from "vitest";
 
 const tester = async (fn: any, expected: any) => {
   const output = await fn();

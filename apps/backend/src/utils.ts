@@ -11,8 +11,13 @@ export const readZodBody = async <T extends z.ZodType>(
     const body = await readBody(event);
     const parsed = jsonparser.parse(body);
     const validated = schema.safeParse(parsed);
-    return { success: validated.success, data: validated };
+    if (validated.success) {
+      return { success: validated.success, data: validated.data };
+    }
+
   } catch (error) {
     return { success: false, data: error };
   }
+   const error = z.object({ error: z.string() }).safeParse({ error: "invalid request" });
+  return { success: false, data: error };
 };

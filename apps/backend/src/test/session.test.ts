@@ -1,8 +1,6 @@
 import {
-  vitest,
   beforeAll,
   describe,
-  it,
   expect,
   afterAll,
   test,
@@ -19,7 +17,7 @@ beforeAll(() => {
 //dummie test
 describe("valid login", () => {
   test("should be able to set a cookie", async () => {
-    const input = { email: "jpmartel99@gmail.com", password: process.env.PASSWORD };
+    const input = { email: "jpmartel98@gmail.com", password: process.env.PASSWORD };
     const data = await fetch("http://localhost:3000/session/login", {
       method: "POST",
       body: JSON.stringify(input),
@@ -28,31 +26,55 @@ describe("valid login", () => {
     const body = await data.json();
 
     expect(body).toEqual({
-      payload: { success: true, data: { email: "jpmartel99@gmail.com", username: "Kamper_lol" } },
+      payload: { success: true, data: { email: "jpmartel98@gmail.com", username: "Leatha93" } },
+
+
       //expect(body).toEqual({ hello: "session" });
     });
   });
 });
 describe("valid register", () => {
+
+  const pass = faker.internet.password();
+  const register = {
+    email: faker.internet.email(),
+    username: faker.internet.userName(),
+    re_password: pass,
+    password: pass,
+  };
+
+
+
   test("should be able to register", async () => {
-    const pass = faker.internet.password();
-    const register = {
-      email: faker.internet.email(),
-      username: faker.internet.userName(),
-      re_password: pass,
-      password: pass
-    };
     const data = await fetch("http://localhost:3000/session/register", {
       method: "POST",
       body: JSON.stringify(register),
     });
     const body = await data.json();
-    console.log("body content", body);
     expect(body).toEqual({
       payload: { success: true, data: { email: register.email, username: register.username } },
       //expect(body).toEqual({ hello: "session" });
     });
   });
+
+  test("should be able to delete account", async () => {
+    const data = await fetch("http://localhost:3000/session/delete", {
+      method: "POST",
+      body: JSON.stringify({ email: register.email }),
+    });
+    const body = await data.json();
+    console.log("body content", body);
+    expect(body).toEqual({
+      payload: { success: true, data: [] },
+      //expect(body).toEqual({ hello: "session" });
+    });
+  }
+  );
+
+
+
+
+
 });
 
 

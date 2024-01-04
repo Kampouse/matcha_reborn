@@ -21,7 +21,6 @@ export const ValidateUser = async (input: string, mail: string) => {
     if (content.rows.length === 0) {
       return null;
     }
-    console.log("content", content.rows[0]);
     const output = z
       .object({
         username: z.string(),
@@ -31,11 +30,9 @@ export const ValidateUser = async (input: string, mail: string) => {
     if (output.success) {
       return output.data;
     } else {
-      console.log("output", output.error);
       return null;
     }
   } catch (e) {
-    console.log(e);
     return null;
   }
 };
@@ -44,7 +41,6 @@ export const deleteAccount = async (inputEmail: string) => {
   const content = await Clientdb.execute("DELETE FROM users WHERE email = ? ", [
     inputEmail,
   ]);
-  console.log("content", content.rows);
   return content.rows;
 };
 
@@ -70,7 +66,6 @@ export const createUser = async (input: {
       "INSERT INTO users (email,username,password_hash) VALUES (?,?,?)",
       [input.email, input.username, hashed],
     );
-    console.log("content", content.rows);
     return content.rows;
   } catch (e) {
     console.log(e);

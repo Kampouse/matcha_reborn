@@ -4,27 +4,28 @@ import { z } from "zod";
 const UsePasswordFromHash = async (input: string) => {
   // argoion2id standart ... pbkdf2
   const key = await argon2.hash(input, { type: 2 })
-  console.log("key", key);
   return key;
 };
 
 export const ValidateUser = async (mail: string, input: string) => {
-  const hashed = await UsePasswordFromHash(input);
   const content = await Clientdb.query(
-    "SELECT * FROM users WHERE email = ?",
-    [mail],
+    "SELECT password_hash,username FROM users WHERE email = ?",
+    [mail]
   );
-  console.log("content", content.data.rows);
   if (content.success === true && content.data.rows.length === 1) {
     const onput = z
-      .object({ username: z.string(), email: z.string() })
+      .object({ password_hash: z.string(), username: z.string() })
       .parse(content.data.rows[0]);
-    return onput;
-  } else {
-
-
-    return null;
+    const validated = await argon2.verify(onput.password_hash, input);
+    if (validated) {
+      return { email: mail, username: onput.username };
+    }
+    else {
+      return null;
+    }
   }
+
+
 };
 
 export const deleteAccount = async (inputEmail: string) => {

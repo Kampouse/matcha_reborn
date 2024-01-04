@@ -13,32 +13,6 @@ SessionsRouter.get(
   }),
 );
 
-
-
-
-
-SessionsRouter.post("/delete", eventHandler(async (event) => {
-
-  const delete_schema = z.object({ email: z.string().email() });
-  const body = await readZodBody(event, delete_schema);
-  if (body.success) {
-    const valid = await deleteAccount(body.data.email);
-    if (valid) {
-      return { payload: { success: true, data: valid } };
-    }
-    else {
-      setResponseStatus(event, 401);
-      return { payload: { success: false, data: null } };
-    }
-  }
-
-}));
-
-
-
-
-
-
 SessionsRouter.post(
   "/register",
   eventHandler(async (event) => {
@@ -51,8 +25,6 @@ SessionsRouter.post(
     const body = await readZodBody(event, register_schema);
     if (body.success) {
       const isExisting = await isExistingUser(body.data?.email, body.data?.username);
-
-      console.log("isExisting", isExisting);
       if (isExisting == true) {
         setResponseStatus(event, 401);
         return { payload: { success: false, data: "exisisting credentials" } };
@@ -102,11 +74,7 @@ SessionsRouter.post(
       const valid = await ValidateUser(validated_body.data.email, validated_body.data.password);
 
       if (valid) {
-
         // #TODO make this work with cookies
-
-
-        console.log("working?>", valid);
         setCookie(event, "session", "session", { httpOnly: true });
         return { payload: { success: true, data: valid } };
       } else {
@@ -114,13 +82,22 @@ SessionsRouter.post(
         return { payload: { success: false, data: "invalid credentials" } };
       }
     }
-
   }),
 );
-
-
-
-
+SessionsRouter.post("/delete", eventHandler(async (event) => {
+  const delete_schema = z.object({ email: z.string().email() });
+  const body = await readZodBody(event, delete_schema);
+  if (body.success) {
+    const valid = await deleteAccount(body.data.email);
+    if (valid) {
+      return { payload: { success: true, data: valid } };
+    }
+    else {
+      setResponseStatus(event, 401);
+      return { payload: { success: false, data: null } };
+    }
+  }
+}));
 SessionsRouter.post(
   "/",
   eventHandler(() => {

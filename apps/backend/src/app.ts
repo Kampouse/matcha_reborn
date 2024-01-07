@@ -1,5 +1,6 @@
 import {
 	createApp,
+	eventHandler,
 	useBase,
 } from "h3";
 
@@ -10,6 +11,7 @@ import type {
 	ExecutedQuery,
 } from "@planetscale/database";
 import "dotenv/config";
+import { ap } from "vitest/dist/reporters-O4LBziQ_";
 const database = () => {
 	const config = {
 		host: process.env.DATABASE_HOST,
@@ -56,9 +58,16 @@ export const app = () => {
 	//App.use(fromNodeMiddleware(pino({})));
 	//App.options.onRequest = (event) => { console.log("on request"); };
 	App.use("/", useBase("/session", SessionsRouter));
+
+	// create a  hello wolrld thing
+	App.use(SessionsRouter)
 	return App;
 };
-export default app;
+
+
+
+
+export default app();
 
 //get the  path that are  being used
 

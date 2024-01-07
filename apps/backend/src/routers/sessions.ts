@@ -98,7 +98,7 @@ SessionsRouter.post("/delete", eventHandler(async (event) => {
     }
   }
 }));
-SessionsRouter.post(
+SessionsRouter.get(
   "/",
   eventHandler(() => {
     return { session: "session" };

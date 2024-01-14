@@ -8,8 +8,9 @@ const SessionsRouter = createRouter({});
 
 SessionsRouter.get(
   "/logout",
-  eventHandler(async (event) => {
-    return { session: "session" };
+  eventHandler(async () => {
+     
+    return { session: "logout" };
   }),
 );
 
@@ -99,7 +100,7 @@ SessionsRouter.post("/delete", eventHandler(async (event) => {
   }
 }));
 SessionsRouter.get(
-  "/",
+  "/session",
   eventHandler(() => {
     return { session: "session" };
   }),

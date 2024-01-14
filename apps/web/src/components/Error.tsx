@@ -1,5 +1,5 @@
 import { Link } from "@solidjs/router";
-export default function Error({ err }) {
+export default function Error(props: { err: Error }) {
   return (
     <div>
       <div class="relative">
@@ -9,7 +9,7 @@ export default function Error({ err }) {
               <h1 class="text-white text-4xl font-bold">
                 Something went wrong :sob:
               </h1>
-              <h1 class="text-white text-2xl p-[3em]">{err.message}</h1>
+              <h1 class="text-white text-2xl p-[3em]">{props.err.message}</h1>
               <button
                 onClick={() => {
                   window.location.reload();
@@ -22,7 +22,7 @@ export default function Error({ err }) {
           </div>
         </div>
       </div>
-      <pre>{err.message}</pre>
+      <pre>{props.err.message}</pre>
       <Link href="/">Go to home</Link>
     </div>
   );

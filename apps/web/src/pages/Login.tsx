@@ -21,7 +21,7 @@ export default function Login() {
       console.log("error state");
       return null;
     }
-    Fetch("/login", {
+    Fetch("/session/login", {
       method: "POST",
       body: JSON.stringify({
         email: validatedContent.email,

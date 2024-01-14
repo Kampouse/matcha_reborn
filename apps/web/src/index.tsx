@@ -6,7 +6,9 @@ import superjson from "superjson";
 import { Router } from "@solidjs/router";
 import { QueryClientProvider, QueryClient } from "@tanstack/solid-query";
 import type { IAppRouter } from "@repo/trpc";
-import { serverConfig } from "@repo/trpc";
+
+const serverConfig = { port: 3000, prefix: "/api/trpc" };
+
 
 import {
   createTRPCProxyClient,

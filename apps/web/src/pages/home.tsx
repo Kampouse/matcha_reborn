@@ -13,7 +13,7 @@ export default function Home() {
           <Link href="/register">
             <h1 class="text-white text-4xl font-bold">Register</h1>
           </Link>
-          <Link href="/register">
+          <Link href="/login">
             <h1 class="text-white text-4xl font-bold">login</h1>
           </Link>
         </div>

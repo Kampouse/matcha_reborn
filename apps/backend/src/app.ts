@@ -11,7 +11,6 @@ import type {
 	ExecutedQuery,
 } from "@planetscale/database";
 import "dotenv/config";
-import { ap } from "vitest/dist/reporters-O4LBziQ_";
 const database = () => {
 	const config = {
 		host: process.env.DATABASE_HOST,

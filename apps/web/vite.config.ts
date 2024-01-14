@@ -11,7 +11,22 @@ export default defineConfig({
     solidPlugin(),
   ],
   server: {
+    host: true,
     port: 5454,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3005",
+        changeOrigin: false,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+
+
+    },
+
+
+
+
   },
   build: {
     target: "esnext",

@@ -9,10 +9,13 @@ const UsePasswordFromHash = async (input: string) => {
 
 export const ValidateUser = async (mail: string, input: string) => {
   const Clientdb = useClientDB();
-  const content = await Clientdb?.query(
+  const content = await Clientdb.query(
     "SELECT password_hash,username FROM users WHERE email = ?",
     [mail]
   );
+  if (content.success === false) {
+    return content;
+  }
   if (content.success === true && content.data.rows.length === 1) {
     const onput = z
       .object({ password_hash: z.string(), username: z.string() })
@@ -22,7 +25,8 @@ export const ValidateUser = async (mail: string, input: string) => {
       return { email: mail, username: onput.username };
     }
     else {
-      return null;
+
+      return content;
     }
   }
 

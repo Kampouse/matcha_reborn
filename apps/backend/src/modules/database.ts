@@ -11,7 +11,6 @@ export const database = () => {
         username: process.env.DATABASE_USERNAME,
         password: process.env.DATABASE_PASSWORD,
     };
-    console.log("config", config);
     const Clientdb = new Client(config);
     return Clientdb;
 };

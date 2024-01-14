@@ -73,7 +73,9 @@ SessionsRouter.post(
 
 
     if (validated_body.success) {
+      console.log("validated_body", validated_body);
       const valid = await ValidateUser(validated_body.data.email, validated_body.data.password);
+      console.log("valid", valid);
 
       if (valid) {
         // #TODO make this work with cookies
@@ -81,7 +83,7 @@ SessionsRouter.post(
         return { payload: { success: true, data: valid } };
       } else {
         setResponseStatus(event, 401);
-        return { payload: { success: false, data: "invalid credentials" } };
+        return { payload: { success: false, data: valid } };
       }
     }
     setResponseStatus(event, 401);

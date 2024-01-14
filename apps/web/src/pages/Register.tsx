@@ -18,7 +18,7 @@ export default function Register() {
 
   type registerFormSchema = ReturnType<typeof Validation>;
   const registerFN = async (validatedContent: registerFormSchema) => {
-    const data = await Fetch("/register", {
+    const data = await Fetch("/session/register", {
       method: "POST",
       body: JSON.stringify({
         email: validatedContent.email,
@@ -29,7 +29,8 @@ export default function Register() {
       headers: {
         credentials: "include",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:2424",
+        "Access-Control-Allow-Origin": "*",
+
       },
     });
     const ouput = z
@@ -118,7 +119,7 @@ export default function Register() {
                 placeholder="retype password"
                 value={pass}
                 class="bg-transparent border border-1 border-gray-900 text-slate-50 text-center"
-              ></input>
+              />
               <button class="mt-6" type="submit">
                 {" "}
                 submit{" "}

@@ -1,5 +1,6 @@
 import * as argon2 from "argon2";
-import { Clientdb } from "../app";
+import { Clientdb } from "./modules/database";
+import { useClientDB } from "./modules/database";
 import { z } from "zod";
 const UsePasswordFromHash = async (input: string) => {
   // argoion2id standart ... pbkdf2
@@ -8,7 +9,8 @@ const UsePasswordFromHash = async (input: string) => {
 };
 
 export const ValidateUser = async (mail: string, input: string) => {
-  const content = await Clientdb.query(
+  const Clientdb = useClientDB();
+  const content = await Clientdb?.query(
     "SELECT password_hash,username FROM users WHERE email = ?",
     [mail]
   );

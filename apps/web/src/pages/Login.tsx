@@ -27,6 +27,11 @@ export default function Login() {
         email: validatedContent.email,
         password: validatedContent.password,
       }),
+      headers: {
+        credentials: "include",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   };
 

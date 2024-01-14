@@ -2,14 +2,14 @@ import { getCookie, readBody, readValidatedBody, setResponseStatus } from "h3";
 import { createRouter, eventHandler, setCookie } from "h3";
 import z from "zod";
 import { readZodBody } from "../utils";
-import { ValidateUser, createUser, deleteAccount, isExistingUser } from "../modules/sessions";
+import { ValidateUser, createUser, deleteAccount, isExistingUser } from "../sessions";
 
 const SessionsRouter = createRouter({});
 
 SessionsRouter.get(
   "/logout",
   eventHandler(async () => {
-     
+
     return { session: "logout" };
   }),
 );
@@ -68,6 +68,7 @@ SessionsRouter.post(
   "/login",
   eventHandler(async (event) => {
     const login = z.object({ email: z.string(), password: z.string() });
+
     const validated_body = await readZodBody(event, login);
 
 
@@ -83,6 +84,8 @@ SessionsRouter.post(
         return { payload: { success: false, data: "invalid credentials" } };
       }
     }
+    setResponseStatus(event, 401);
+    return { payload: validated_body };
   }),
 );
 SessionsRouter.post("/delete", eventHandler(async (event) => {

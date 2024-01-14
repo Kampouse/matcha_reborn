@@ -7,17 +7,34 @@ export const readZodBody = async <T extends z.ZodType>(
   schema: T,
 ): Promise<{ success: boolean; data: z.infer<T> }> => {
   try {
+    let parsed;
     const jsonparser = zu.stringToJSON();
     const body = await readBody(event);
-    const parsed = jsonparser.parse(body);
-    const validated = schema.safeParse(parsed);
-    if (validated.success) {
-      return { success: validated.success, data: validated.data };
+    if (body == null) {
+      return { success: false, data: { error: "invalid request" } };
     }
+    if (typeof body === "string") {
 
+      parsed = jsonparser.parse(body);
+      const validated = schema.safeParse(parsed);
+
+      if (validated.success) {
+        return { success: validated.success, data: validated.data };
+      }
+      return { success: validated.success, data: { error: "invalid request" } };
+    }
+    if (typeof body === "object") {
+      parsed = body;
+      const validated = schema.safeParse(parsed);
+      if (validated.success) {
+        return { success: validated.success, data: validated.data };
+      }
+      return { success: validated.success, data: { error: "invalid request" } };
+    }
   } catch (error) {
     return { success: false, data: error };
   }
-   const error = z.object({ error: z.string() }).safeParse({ error: "invalid request" });
+  const error = z.object({ error: z.string() }).safeParse({ error: "invalid request" });
   return { success: false, data: error };
+
 };

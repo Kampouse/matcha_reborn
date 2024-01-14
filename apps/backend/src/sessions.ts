@@ -1,5 +1,4 @@
 import * as argon2 from "argon2";
-import { Clientdb } from "./modules/database";
 import { useClientDB } from "./modules/database";
 import { z } from "zod";
 const UsePasswordFromHash = async (input: string) => {
@@ -31,6 +30,7 @@ export const ValidateUser = async (mail: string, input: string) => {
 };
 
 export const deleteAccount = async (inputEmail: string) => {
+  const Clientdb = useClientDB();
   const content = await Clientdb.query("DELETE FROM users WHERE email = ? ", [
     inputEmail,
   ]);
@@ -42,16 +42,29 @@ export const isExistingUser = async (inputEmail: string, username: string) => {
 
   console.log("datUser", inputEmail);
 
-
+  const Clientdb = useClientDB();
   // make a query where it check if the email or username is already in the database
   const datUser = await Clientdb.query(
     "SELECT username,email FROM users WHERE email = ? OR username = ? ",
     [inputEmail, username],
   );
+  if (datUser.success === false) {
+    console.log("datUser", datUser);
+    return false;
+
+
+
+  }
+
+
 
   if (datUser.data.rows.length === 0) {
     return false;
   }
+
+
+
+
   return true;
 };
 export const createUser = async (input: {
@@ -69,6 +82,7 @@ export const createUser = async (input: {
 
   const hashed = await UsePasswordFromHash(input.password);
 
+  const Clientdb = useClientDB();
   try {
     const content = await Clientdb.query(
       "INSERT INTO users (email,username,password_hash) VALUES (?,?,?)",

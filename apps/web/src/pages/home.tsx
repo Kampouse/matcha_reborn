@@ -1,5 +1,4 @@
 import { createSignal } from "solid-js";
-import { Link } from "@solidjs/router";
 export default function Home() {
   document.title = "Home";
   const [count, setCount] = createSignal(0);
@@ -10,12 +9,12 @@ export default function Home() {
   text-gray-700 p-8 h-screen flex flex-col items-center justify-center"
       >
         <div class="flex flex-row gap-5 bg-lime-200 items-center justify-center    w-96 h-[25rem] border-1  ">
-          <Link href="/register">
+          <a href="/register">
             <h1 class="text-white text-4xl font-bold">Register</h1>
-          </Link>
-          <Link href="/login">
+          </a>
+          <a href="/login">
             <h1 class="text-white text-4xl font-bold">login</h1>
-          </Link>
+          </a>
         </div>
       </section>
     </>

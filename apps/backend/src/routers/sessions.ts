@@ -1,4 +1,4 @@
-import { getCookie, readBody, readValidatedBody, setResponseStatus } from "h3";
+import { getCookie, readBody, readValidatedBody, sendRedirect, setResponseStatus } from "h3";
 import { createRouter, eventHandler, setCookie } from "h3";
 import z from "zod";
 import { readZodBody } from "../utils";
@@ -73,13 +73,10 @@ SessionsRouter.post(
 
 
     if (validated_body.success) {
-      console.log("validated_body", validated_body);
       const valid = await ValidateUser(validated_body.data.email, validated_body.data.password);
-      console.log("valid", valid);
-
       if (valid) {
         // #TODO make this work with cookies
-        setCookie(event, "session", "session", { httpOnly: true });
+        setCookie(event, "session", "hello", { httpOnly: true });
         return { payload: { success: true, data: valid } };
       } else {
         setResponseStatus(event, 401);

@@ -1,6 +1,8 @@
 import { Headless } from "../components/Layout";
 import { loginFormSchema } from "../utils/schemas";
 import { trpc, Fetch } from "../utils/trpc";
+import { useLocation } from "@solidjs/router"
+import { useNavigate, redirect } from "@solidjs/router"
 import type z from "zod";
 export default function Login() {
   type loginFormSchema = z.infer<typeof loginFormSchema> | z.ZodIssue[];
@@ -10,6 +12,8 @@ export default function Login() {
   };
   //onClientSubmit(validatedContent) ? onServerSubmit(validatedContent) : console.log("fall back to error state here") }
 
+
+  const navigate = useNavigate();
   const handleSubmit = (e: Event) => {
     const form = e.target as HTMLFormElement;
     e.preventDefault();
@@ -32,6 +36,16 @@ export default function Login() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+    }).then((res) => {
+
+
+      if (res.status === 200) {
+        navigate("/dashboard");
+        return null;
+      }
+      console.log("error");
+
+
     });
   };
 

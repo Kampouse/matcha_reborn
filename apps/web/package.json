@@ -12,11 +12,11 @@
   "dependencies": {
     "@repo/ui": "workspace:*",
     "@repo/trpc": "workspace:*",
-    "@solidjs/router": "^0.8.2",
+    "@solidjs/router": "^0.10.0",
     "@tanstack/solid-query": "^5.8.4",
     "@trpc/client": "^10.43.6",
     "httpBatchLink": "link:@trpc/client/links/httpBatchLink",
-    "solid-js": "^1.7.6",
+    "solid-js": "^1.8.11",
     "superjson": "^2.2.1",
     "zod": "^3.22.4",
     "zod-form-data": "^2.0.2"

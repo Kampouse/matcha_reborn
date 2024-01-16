@@ -5,8 +5,11 @@ import { render } from "solid-js/web";
 import superjson from "superjson";
 import { Router } from "@solidjs/router";
 import { QueryClientProvider, QueryClient } from "@tanstack/solid-query";
+import { Route } from "@solidjs/router";
+import { For } from "solid-js";
+import Home from "./pages/home";
 import type { IAppRouter } from "@repo/trpc";
-
+import { routes } from "./routes"
 const serverConfig = { port: 3000, prefix: "/api/trpc" };
 
 
@@ -18,7 +21,6 @@ import {
   wsLink,
 } from "@trpc/client";
 
-import App from "./app";
 
 const { port, prefix } = serverConfig;
 const urlEnd = `localhost:${port}${prefix}`;
@@ -48,13 +50,15 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(
-  () => (
-    <QueryClientProvider client={queried}>
-      <Router>
-        <App />
-      </Router>
-    </QueryClientProvider>
-  ),
-  root,
-);
+
+
+
+render(() =>
+  <Router >
+    <For each={routes}>
+      {(route) => (
+        <Route path={route.path} component={route.component} />
+      )}
+    </For>
+  </Router>
+  , document.getElementById("root"));

@@ -1,4 +1,3 @@
-import { Link } from "@solidjs/router";
 export default function Error(props: { err: Error }) {
   return (
     <div>
@@ -23,7 +22,7 @@ export default function Error(props: { err: Error }) {
         </div>
       </div>
       <pre>{props.err.message}</pre>
-      <Link href="/">Go to home</Link>
+      <a href="/">Go to home</a>
     </div>
   );
 }

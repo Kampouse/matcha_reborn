@@ -1,5 +1,4 @@
 import { For } from "solid-js";
-import { Link } from "@solidjs/router";
 export const Nav = () => {
   const pages = [
     { name: "swipe", href: "/swipe", current: true },
@@ -15,9 +14,9 @@ export const Nav = () => {
         <For each={pages}>
           {(page) => (
             <li class="py-2 px-4">
-              <Link href={page.href} class="no-underline hover:underline">
+              <a href={page.href} class="no-underline hover:underline">
                 {page.name}
-              </Link>
+              </a>
             </li>
           )}
         </For>

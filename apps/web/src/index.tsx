@@ -5,7 +5,7 @@ import { render } from "solid-js/web";
 import superjson from "superjson";
 import { Router } from "@solidjs/router";
 import { QueryClientProvider, QueryClient } from "@tanstack/solid-query";
-import { Route } from "@solidjs/router";
+import { Route, Routes } from "@solidjs/router";
 import { For } from "solid-js";
 import Home from "./pages/home";
 import type { IAppRouter } from "@repo/trpc";
@@ -60,5 +60,6 @@ render(() =>
         <Route path={route.path} component={route.component} />
       )}
     </For>
+
   </Router>
   , document.getElementById("root"));

@@ -1,7 +1,6 @@
 import { createSignal } from "solid-js";
 export default function Home() {
   document.title = "Home";
-  const [count, setCount] = createSignal(0);
   return (
     <>
       <section
